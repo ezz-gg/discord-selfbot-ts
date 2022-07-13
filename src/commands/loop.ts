@@ -28,6 +28,8 @@ export async function run(Client: Discord.Client, message: Discord.Message, args
                     case (pattern3.test(args[0])):
                         player(message, "loop_off", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 0)
                         break
+                    default:
+                        return;
                 }
                 break
             case (!message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):

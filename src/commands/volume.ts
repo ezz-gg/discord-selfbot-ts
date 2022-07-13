@@ -14,17 +14,12 @@ export async function run(Client: Discord.Client, message: Discord.Message, args
     if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
         switch (true) {
             case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
-                switch (true) {
-                    case (args[0] === null):
-                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 1)
-                        break
-                    case (args[0] !== null):
-                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[0])
-                        break
-                    default:
-                        return;
+                if (args[0] === null) {
+                    return;
+                } else if (args[0] !== null) {
+                    player(message, "volume", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, args[0], 0);
                 }
-                break
+                break;
             case (!message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
                 message.reply(
                     `エラー\n\`\`\` BOTはボイスチャンネルに接続していません\`\`\``
@@ -32,15 +27,15 @@ export async function run(Client: Discord.Client, message: Discord.Message, args
                 Logger.log(
                     `エラー：\n			BOTはボイスチャンネルに接続していません`
                 )
-                break
+                break;
         }
     }
 }
 const info = {
-    name: "skip",
-    description: "skip",
+    name: "volume",
+    description: "Set Music Volume",
     category: "music",
-    args: "N曲スキップ"
+    args: "none"
 }
 
 export { info };

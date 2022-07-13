@@ -13,17 +13,8 @@ import { player } from '../bot'
 export async function run(Client: Discord.Client, message: Discord.Message, args: any[]) {
     if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
         switch (true) {
-            case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
-                switch (true) {
-                    case (args[0] === null):
-                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 1)
-                        break
-                    case (args[0] !== null):
-                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[0])
-                        break
-                    default:
-                        return;
-                }
+            case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):   
+                player(message, "pause", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 0)
                 break
             case (!message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
                 message.reply(
@@ -37,10 +28,10 @@ export async function run(Client: Discord.Client, message: Discord.Message, args
     }
 }
 const info = {
-    name: "skip",
-    description: "skip",
+    name: "pause",
+    description: "Pause Music",
     category: "music",
-    args: "N曲スキップ"
+    args: "none"
 }
 
 export { info };
