@@ -87,6 +87,25 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 				)
 			}
 			break
+		case (type === "pause"):
+			if (player.paused === true) {
+				player.pause(false)
+				message.reply(
+					`曲の一時停止を解除しました`
+				);
+				Logger.log(
+					`曲の一時停止を解除しました`
+				)
+			} else if (player.paused === false) {
+				player.pause(true)
+				message.reply(
+					`曲を一時停止しました`
+				);
+				Logger.log(
+					`曲を一時停止しました`
+				)
+			}
+			break
 		case (type === "skip"):
 			if (value === 0) {
 				player.stop();
@@ -107,6 +126,15 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 					value -= 1
 					player.stop();		
 			}
+			break
+		case (type === "volume"):
+			player.setVolume(volume / 10)
+			message.reply(
+				`ボリュームを${volume}に設定しました`
+			);
+			Logger.log(
+				`ボリュームを${volume}に設定しました`
+			)
 			break
 		case (type === "leave"):
 			player.destroy();
