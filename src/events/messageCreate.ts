@@ -1,9 +1,79 @@
 import * as Discord from "discord.js-selfbot-v13";
 import kanjilist from '../kanji.json';
 import * as Logger from "../utils/logger";
-import { Prefix } from "../envs";
+import { Prefix, Hardyuyuurl, kyoueioshirasefuckurl, kyoueizatudanfuckurl, rengooshirasefuckurl, rengozatudanfuckurl, kyoueioshirasehimituurl, kyoueizatudanhimituurl, rengooshirasehimituurl, rengozatudanhimituurl } from "../envs";
+import { webhooksend, webhookembedsend } from "../utils/webhook";
 
 export default async (Client: Discord.Client, message: Discord.Message) => {
+
+	let messagecontent = message.content || "ㅤ"
+	if (message.channel === Client.guilds.cache.get('867341022937612288').channels.cache.find(channel => channel.name === "│中央广报￤notice")) {
+		let message_tikan1 = messagecontent.replace(/@everyone/g, '@every1').replace(/@here/g, '@her3');
+		let message_tikan2 =  message_tikan1 + message.attachments.map(attachment => attachment.url)
+		if (message.embeds[0] == null) {
+			webhooksend(kyoueioshirasefuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+			webhooksend(kyoueioshirasehimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+		} else if (message.embeds[0] != null) {
+			message.embeds.forEach((embed) => {
+				webhookembedsend(kyoueioshirasefuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+				webhookembedsend(kyoueioshirasehimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+			})
+		}
+	}
+
+	if (message.channel === Client.guilds.cache.get('867341022937612288').channels.cache.find(channel => channel.name === "🚩｜荒ʖ’し𝖢𝖧𝖠𝖳")) {
+		let message_tikan1 = messagecontent.replace(/@everyone/g, '@every1').replace(/@here/g, '@her3');
+		let message_tikan2 =  message_tikan1 + message.attachments.map(attachment => attachment.url)
+		if (message.embeds[0] == null) {
+			webhooksend(kyoueizatudanfuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+			webhooksend(kyoueizatudanhimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+		} else if (message.embeds[0] != null) {
+			message.embeds.forEach((embed) => {
+				webhookembedsend(kyoueizatudanfuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+				webhookembedsend(kyoueizatudanhimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+			})
+		}
+	}
+
+	if (message.channel === Client.guilds.cache.get('946359933216116736').channels.cache.find(channel => channel.name === "│中央広報￤notice")) {
+		let message_tikan1 = messagecontent.replace(/@everyone/g, '@every1').replace(/@here/g, '@her3');
+		let message_tikan2 =  message_tikan1 + message.attachments.map(attachment => attachment.url)
+		if (message.embeds[0] == null) {
+			webhooksend(rengooshirasefuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+			webhooksend(rengooshirasehimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+		} else if (message.embeds[0] != null) {
+			message.embeds.forEach((embed) => {
+				webhookembedsend(rengooshirasefuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+				webhookembedsend(rengooshirasehimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+			})
+		}
+	}
+
+	if (message.channel === Client.guilds.cache.get('946359933216116736').channels.cache.find(channel => channel.name === "《🚩荒連雑談》")) {
+		let message_tikan1 = messagecontent.replace(/@everyone/g, '@every1').replace(/@here/g, '@her3');
+		let message_tikan2 =  message_tikan1 + message.attachments.map(attachment => attachment.url)
+		if (message.embeds[0] == null) {
+			webhooksend(rengozatudanfuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+			webhooksend(rengozatudanhimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+		} else if (message.embeds[0] != null) {
+			message.embeds.forEach((embed) => {
+				webhookembedsend(rengozatudanfuckurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+				webhookembedsend(rengozatudanhimituurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+			})
+		}
+	}
+
+	if (message.channel === Client.guilds.cache.get('621623130124713994').channels.cache.find(channel => channel.name === "【vanilla】mc-chat")) {
+		let message_tikan1 = messagecontent.replace(/@everyone/g, '@every1').replace(/@here/g, '@her3');
+		let message_tikan2 =  message_tikan1 + message.attachments.map(attachment => attachment.url)
+		if (message.embeds[0] == null) {
+			webhooksend(Hardyuyuurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }))
+		} else if (message.embeds[0] != null) {
+			message.embeds.forEach((embed) => {
+				webhookembedsend(Hardyuyuurl, message_tikan2, message.member.displayName, message.member.displayAvatarURL({ dynamic: true }), embed)
+			})
+		}
+	}
 
 	let ignore = !message.author.bot && message.author.id !== Client.user.id
 	if (ignore) {
@@ -30,7 +100,6 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 			}
 		}
 	}
-
 	const argss: any[] = message.content.slice(Prefix.length).trim().split(" ");
 	const args:any [] = argss || undefined
 	const cmd: any = argss.shift().toLowerCase();
