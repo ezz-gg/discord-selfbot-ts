@@ -35,49 +35,59 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 	const args:any [] = argss || undefined
 	const cmd: any = argss.shift().toLowerCase();
 
-	const playaliases = /play|p|join|再生|流す/i;
-	const leavealiases = /stop|st|leave|dissconnect|di|ストップ|退出|さようなら/i;
-	const skipaliases = /skip|sk|next|スキップ|次|この曲嫌い/i;
-	const loopaliases = /loop|lo|repeat|re|ループ|リピート/i;
-	const slashaliases = /slash|sl|スラッシュ|スラ/i;
-	const slashpamaliases = /slashpam|sls|スラッシュスパム|スラス/i;
-	const cmdaliases = /cmd|c|コマンド|コ/i;
-	const cmdpamaliases = /cmdpam|cs|コマンドスパム|コス/i;
-	const kaspamaliases = /kaspam|ks|カソパム|カスパム/i;
-	const kaspamezaliases = /kaspamez|ksez|カソパムez|カスパムez/i;
+	const playaliases = /^(play|p|join|再生|流す)$/i;
+	const leavealiases = /^(stop|st|leave|dissconnect|di|ストップ|退出|さようなら)$/i;
+	const skipaliases = /^(skip|sk|next|スキップ|次|この曲嫌い)$/i;
+	const loopaliases = /^(loop|lo|repeat|re|ループ|リピート)$/i;
+	const slashaliases = /^(slash|sl|スラッシュ|スラ)$/i;
+	const slashpamaliases = /^(slashpam|sls|スラッシュスパム|スラス)$/i;
+	const cmdaliases = /^(cmd|c|コマンド|コ)$/i;
+	const cmdpamaliases = /^(cmdpam|cs|コマンドスパム|コス)$/i;
+	const kaspamaliases = /^(kaspam|ks|カソパム|カスパム)$/i;
+	const kaspamezaliases = /^(kaspamez|ksez|カソパムez|カスパムez)$/i;
 
 	if (message.content.startsWith(Prefix)) {
 		switch (true) {
 			case (playaliases.test(cmd)):
 				require(`../commands/play`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (leavealiases.test(cmd)):
 				require(`../commands/leave`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (skipaliases.test(cmd)):
 				require(`../commands/skip`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (loopaliases.test(cmd)):
 				require(`../commands/loop`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (slashaliases.test(cmd)):
 				require(`../commands/slash`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (slashpamaliases.test(cmd)):
 				require(`../commands/slashpam`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (cmdaliases.test(cmd)):
-				require(`../commands/cnd`).run(Client, message, args);
+				require(`../commands/cmd`).run(Client, message, cmd);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (cmdpamaliases.test(cmd)):
-				require(`../commands/cmdpam`).run(Client, message, args);
+				require(`../commands/cmdpam`).run(Client, message, cmd);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (kaspamaliases.test(cmd)):
 				require(`../commands/kaspam`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (kaspamezaliases.test(cmd)):
 				require(`../commands/kaspamez`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			default:
 				return
 		}
