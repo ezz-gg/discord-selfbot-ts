@@ -1,5 +1,6 @@
 import * as Discord from "discord.js-selfbot-v13";
 import { Ownerid, Prefix } from "../envs";
+import kanjilist from '../kanji.json';
 import * as Logger from "../utils/logger";
 
 /**
