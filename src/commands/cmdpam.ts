@@ -12,20 +12,27 @@ import * as Logger from "../utils/logger";
 let kaisu = 0;
 export async function run(Client: Discord.Client, message: Discord.Message, cmd) {
     if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
-        kaisu += 1;
-        if (kaisu === 2 || 2 < kaisu) {
-          while (kaisu !== 0) {
-            kaisu -= 1;
-          }
-          console.log("cmdpamを停止しました");
-        } else
-            console.log("cmdpamを開始しました");
-            if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length !== 0) {
-                while (kaisu === 1) {
-                    const messagecontent = message.content.slice(Prefix.length).trim().slice(cmd.length).trim()
-                    await message.channel.send(messagecontent);
+        if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length !== 0) {
+            kaisu += 1;
+            if (kaisu === 2 || 2 < kaisu) {
+            while (kaisu !== 0) {
+                kaisu -= 1;
+            }
+            console.log("cmdpamを停止しました");
+            } else
+                console.log("cmdpamを開始しました");
+                if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length !== 0) {
+                    while (kaisu === 1) {
+                        const messagecontent = message.content.slice(Prefix.length).trim().slice(cmd.length).trim()
+                        await message.channel.send(messagecontent);
                 }
             }
+        } else if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length === 0) {
+            message.reply(
+                `エラー\n\`\`\` なんか言わせろや \`\`\``
+            );
+            console.log(`エラー\n なんか言わせろや`);
+        }
     }
 }
 const info = {
