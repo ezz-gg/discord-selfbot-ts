@@ -24,8 +24,9 @@ export async function run(Client: Discord.Client, message: Discord.Message, cmd)
                 console.log("cmdpamを開始しました");
                 if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length !== 0) {
                     while (kaisu === 1) {
-                        const messagecontent = message.content.slice(Prefix.length).trim().slice(cmd.length).trim()
-                        await message.channel.send(messagecontent);
+                        const messagecontent1 = message.content.slice(Prefix.length).trim().slice(cmd.length).trim()
+                        const messagecontent2 = messagecontent1.replace( '!kanji?', kanjilist[Math.floor(Math.random()*kanjilist.length)] );
+                        await message.channel.send(messagecontent2);
                 }
             }
         } else if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length === 0) {
