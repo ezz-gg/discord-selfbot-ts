@@ -1,8 +1,7 @@
 import * as Discord from "discord.js-selfbot-v13";
 import kanjilist from '../kanji.json';
 import * as Logger from "../utils/logger";
-import { Prefix, Hardyuyuurl, kyoueioshirasefuckurl, kyoueizatudanfuckurl, rengooshirasefuckurl, rengozatudanfuckurl, kyoueioshirasehimituurl, kyoueizatudanhimituurl, rengooshirasehimituurl, rengozatudanhimituurl } from "../envs";
-import { webhooksend, webhookembedsend } from "../utils/webhook";
+import { Prefix } from "../envs";
 
 export default async (Client: Discord.Client, message: Discord.Message) => {
 	
