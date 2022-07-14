@@ -25,7 +25,7 @@ export async function run(Client: Discord.Client, message: Discord.Message, cmd)
                 if (message.content.slice(Prefix.length).trim().slice(cmd.length).trim().length !== 0) {
                     while (kaisu === 1) {
                         const messagecontent1 = message.content.slice(Prefix.length).trim().slice(cmd.length).trim()
-                        const messagecontent2 = messagecontent1.replace( '!kanji?', kanjilist[Math.floor(Math.random()*kanjilist.length)] );
+                        const messagecontent2 = messagecontent1.replace( /!kanji!/g, function () { return kanjilist[Math.floor(Math.random()*kanjilist.length)]});
                         await message.channel.send(messagecontent2);
                 }
             }
