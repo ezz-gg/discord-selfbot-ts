@@ -1,4 +1,4 @@
-# selfbot-js
+# selfbot-ts
 discord.js-selfbot-v13を使ったTOS違反SELFBOT
 
 # 何これ
