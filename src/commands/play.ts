@@ -1,7 +1,7 @@
 import * as Discord from "discord.js-selfbot-v13";
 import { Ownerid, Prefix } from "../envs";
 import * as Logger from "../utils/logger";
-import { ClientManager, player } from '../bot'
+import { player } from '../bot'
 /**
  * Replies with some info about the bot host
  * @param {Discord.Client} Client the client

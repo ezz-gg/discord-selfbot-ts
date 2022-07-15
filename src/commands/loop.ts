@@ -12,7 +12,7 @@ import { player } from '../bot'
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message, args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
+    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
         const pattern1 = /all|全部|すべて|全て|リスト|queue|キュー|list/i;
         const pattern2 = /1|one|一つ|一|song|曲|this/i;
         const pattern3 = /off|オフ|しない|no/i;

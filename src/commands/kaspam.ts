@@ -12,7 +12,7 @@ import * as Logger from "../utils/logger";
  */
 let kaisu = 0;
 export async function run(Client: Discord.Client, message: Discord.Message,  args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
+    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
         kaisu += 1;
     if (kaisu === 2 || 2 < kaisu) {
       while (kaisu !== 0) {

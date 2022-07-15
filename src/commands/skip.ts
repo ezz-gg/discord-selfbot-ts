@@ -11,12 +11,12 @@ import { player } from '../bot'
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message, args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
+    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
         switch (true) {
             case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
                 switch (true) {
                     case (args[0] === null):
-                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 1)
+                        player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 0)
                         break
                     case (args[0] !== null):
                         player(message, "skip", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[0])

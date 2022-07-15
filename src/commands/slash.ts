@@ -11,7 +11,7 @@ import * as Logger from "../utils/logger";
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message,  args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id) {
+    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
         const pattern2 = /\d{18}/;
         if (pattern2.test(args[0])) {
             if (message.attachments.size === 0) {
