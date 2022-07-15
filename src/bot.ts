@@ -6,12 +6,20 @@ import { Token, Climode, LavalinkHost, LavalinkPassword } from "./envs";
 import express from 'express';
 import { Manager } from "erela.js";
 import * as Logger from "./utils/logger";
+import * as fs from 'fs';
+import * as path from "path";
+
 const app = express()
 const Client: Discord.Client = new Discord.Client({
 	checkUpdate: false,
 });
 
-Client.on('error', console.error);
+Client.on('error', Logger.error);
+
+/* あまり使わない方がいいと思うなり
+タイムアウトの対応できてないから使います*/
+process.on('uncaughtException', function(err) {Logger.error(err)});
+
 
 let rl = readline.createInterface({
 	input: process.stdin,
@@ -20,15 +28,15 @@ let rl = readline.createInterface({
 
 (async () => {
 	await Binder.bind(Client);
+	await Client.login(Token);
 	app.listen(3000, '0.0.0.0', () => {
 	  });
-	app.get('/', (req, res)=> {
+	app.get('/', (req: any, res: { json: (arg0: { server: string; }) => void; end: () => void; })=> {
 		res.json({ "server": "running"});
 		res.end();
 	})
-	Client.login(Token);
 	if (Climode) {
-		sleep(5000, function() {
+		sleep(5000, async function() {
 			input()
 		});
 	}
@@ -42,26 +50,40 @@ export const ClientManager = new Manager({
 		password: LavalinkPassword || "password",
 	  },
 	],
-	send(id, payload) {
+	send(id: any, payload: any) {
 	  const guild = Client.guilds.cache.get(id);
 	  if (guild) guild.shard.send(payload);
 	},
   })
   .on("nodeConnect", node => console.log(`Node ${node.options.identifier} connected`))
   .on("nodeError", (node, error) => console.log(`Node ${node.options.identifier} had an error: ${error.message}`))
-  .on("trackStart", (player, track) => {
+  .on("trackStart", (player: any, track: any) => {
 	return;
   })
-  .on("queueEnd", (player) => {
+  .on("queueEnd", async (player: { destroy: () => void; }) => {
     player.destroy();
   });
-export async function player(message: Discord.Message, type, title, tcid, vcid, author, guildid, volume, value) {
+export async function player(message: Discord.Message, type: string | number, title: any, tcid: any, vcid: any, author: any, guildid: any, volume: number, value: any) {
 	var player = ClientManager.create({
 		guild: guildid,
 		voiceChannel: vcid,
 		textChannel: tcid,
 	});
+	let blacklist = JSON.parse(fs.readFileSync(path.join(__dirname,'./blacklist.json'), 'utf8'))
 	switch (true) {
+		case (type === "blacklist_list"):
+			await message.reply(`ブラックリスト\n\`\`\`${JSON.stringify(blacklist)}\`\`\``)
+			break;
+		case (type === 'blacklist_add'):
+			blacklist[value] = title;
+			message.reply(`ブラックリストに追加\n\`\`\`ユーザー：${value}\n理由：${title}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./blacklist.json'), JSON.stringify(blacklist));
+			break;
+		case (type === "blacklist_delete"):
+			delete blacklist[value];
+			message.reply(`ブラックリストから削除\n\`\`\`ユーザー：${value}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./blacklist.json'), JSON.stringify(blacklist));
+			break;
 		case (type === "play"):
 			const res = await ClientManager.search(
 				title,
@@ -69,13 +91,13 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 			);
 			player.connect();
 			player.queue.add(res.tracks[0]);
-			message.reply(
+			await message.reply(
 				`曲を追加しました\n ┣曲 ${res.tracks[0].title}`
 			)
 			if (!player.playing && !player.paused && !player.queue.size) {
-				player.play();
+				await player.play();
 				player.setVolume(volume / 10);
-				message.reply(
+				await message.reply(
 					`再生を開始しました\n ┣曲 ${res.tracks[0].title}\n ┣音量 ${
 					volume
 					}%\n ┣チャンネル\n     ┣${message.guild.channels.cache.get(vcid)}`
@@ -83,14 +105,14 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 				console.log(
 					`再生開始\n ┣曲 ${res.tracks[0].title}\n ┣音量 ${
 					volume
-					}%\n ┣チャンネル\n    ┣${message.guild.channels.cache.get(volume)}`
+					}%\n ┣チャンネル\n    ┣${message.guild.channels.cache.get(vcid)}`
 				)
 			}
 			break
 		case (type === "pause"):
 			if (player.paused === true) {
 				player.pause(false)
-				message.reply(
+				await message.reply(
 					`曲の一時停止を解除しました`
 				);
 				Logger.log(
@@ -98,7 +120,7 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 				)
 			} else if (player.paused === false) {
 				player.pause(true)
-				message.reply(
+				await message.reply(
 					`曲を一時停止しました`
 				);
 				Logger.log(
@@ -109,14 +131,14 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 		case (type === "skip"):
 			if (value === 0) {
 				player.stop();
-				message.reply(
+				await message.reply(
 					`この曲をスキップしました`
 				);
 				Logger.log(
 					`この曲をスキップしました`
 				)
 			} else if (type !== 0) {
-				message.reply(
+				await message.reply(
 					`${value}曲をスキップしました`
 				);
 				Logger.log(
@@ -129,7 +151,7 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 			break
 		case (type === "volume"):
 			player.setVolume(volume / 10)
-			message.reply(
+			await message.reply(
 				`ボリュームを${volume}に設定しました`
 			);
 			Logger.log(
@@ -138,120 +160,120 @@ export async function player(message: Discord.Message, type, title, tcid, vcid, 
 			break
 		case (type === "leave"):
 			player.destroy();
-			message.reply(
+			await message.reply(
 				`ボイスチャンネルから切断しました`
 			);
-			Logger.log(
+			await Logger.log(
 				`ボイスチャンネルから切断しました`
 			)
 			break
 		case (type === "loop_all"):
 			player.setTrackRepeat(false)
 			player.setQueueRepeat(true);
-			message.reply(
+			await message.reply(
 				`全ての曲をループします`
 			);
-			Logger.log(
+			await Logger.log(
 				`全ての曲をループします`
 			)
 			break
 		case (type === "loop_one"):
 			player.setQueueRepeat(false)
 			player.setTrackRepeat(true)
-			message.reply(
+			await message.reply(
 				`この曲をループします`
 			);
-			Logger.log(
+			await Logger.log(
 				`この曲をループします`
 			)
 			break
 		case (type === "loop_off"):
 			player.setQueueRepeat(false)
 			player.setTrackRepeat(false)
-			message.reply(
+			await message.reply(
 				`ループを無効化しました`
 			);
-			Logger.log(
+			await Logger.log(
 				`ループを無効化しました`
 			)
 			break
 	}
 }
 
-function sleep(waitSec, callback) {
+export async function sleep(waitSec: number, callback: { (): Promise<void>; (): void; }) {
 	setTimeout(callback, waitSec);
 }
 
-function input() {
+async function input() {
 	let whileloop = 0
 	while (whileloop === 0)
 		whileloop += 1
 		rl.question('入力：コマンド >', (cmd) => {
-			switch (cmd) {
+		switch (cmd) {
 			case 'say':
-				let say = 0
-				say += 1
+				let say = 0;
+				say += 1;
 				while (say === 1) {
-					say += 1
-					rl.question('入力：Say：チャンネルID (ID/n) >', (say1) => {
+					say += 1;
+					rl.question('入力：Say：チャンネルID (ID/n) >', async (say1) => {
 						switch (say1) {
-						case "n":
-						case "N":
-						case "c":
-						case "C":
-						case "取り消し":
-						case "送らない":
-						case "キャンセル":
-						case "cancel":
-							console.log("取り消し：Say：送信をキャンセルしました");
-							input()
-							break
-						default:
-							const pattern1 = /\d{18}/;
-							if (pattern1.test(say1)) {
-								say += 8
-								while (say === 10) {
-									say += 1
-									rl.question('入力：Say：メッセージ内容 >', (say2) => {
-										rl.question(`確認：Say：\n     チャンネルID：${say1}\n     送信内容：\n${say2}\n送信しますか? (Y/n) >`, (say3) => {
-											switch (say3) {
-											case "y":
-											case "Y":
-											case "はい":
-											case "うん":
-											case "いいよ":
-												say -= 11;
-												// @ts-ignore
-												Client.channels.fetch(say1).then(c => c.send(say2))
-												console.log(`完了：Say：\n     チャンネルID：${say1}\n     送信内容：\n${say2}`)
-												input()
-												break
-											case "n":
-											case "N":
-											case "いいえ":
-											case "だめ":
-											case "いやだ":
-											case "c":
-											case "C":
-											case "取り消し":
-											case "送らない":
-											case "キャンセル":
-											case "cancel":
-												console.log("取り消し：Say：の送信をキャンセルしました");
-												say -= 11;
-												input()
-												break
-											}
-										})
-									})
+							case "n":
+							case "N":
+							case "c":
+							case "C":
+							case "取り消し":
+							case "送らない":
+							case "キャンセル":
+							case "cancel":
+								console.log("取り消し：Say：送信をキャンセルしました");
+								await input();
+								break;
+							default:
+								const pattern1 = /\d{18}/;
+								if (pattern1.test(say1)) {
+									say += 8;
+									while (say === 10) {
+										say += 1;
+										rl.question('入力：Say：メッセージ内容 >', (say2) => {
+											rl.question(`確認：Say：\n     チャンネルID：${say1}\n     送信内容：\n${say2}\n送信しますか? (Y/n) >`, async (say3) => {
+												switch (say3) {
+													case "y":
+													case "Y":
+													case "はい":
+													case "うん":
+													case "いいよ":
+														say -= 11;
+														// @ts-ignore
+														await Client.channels.fetch(say1).then((c: { send: (arg0: string) => any; }) => c.send(say2));
+														console.log(`完了：Say：\n     チャンネルID：${say1}\n     送信内容：\n${say2}`);
+														await input();
+														break;
+													case "n":
+													case "N":
+													case "いいえ":
+													case "だめ":
+													case "いやだ":
+													case "c":
+													case "C":
+													case "取り消し":
+													case "送らない":
+													case "キャンセル":
+													case "cancel":
+														console.log("取り消し：Say：の送信をキャンセルしました");
+														say -= 11;
+														await input();
+														break;
+												}
+											});
+										});
+									}
+								} else if (!pattern1.test(say1)) {
+									console.log("エラー：Say：例外が発生したのでキャンセルしました");
+									await input();
 								}
-							} else if (!pattern1.test(say1)) {
-								console.log("エラー：Say：例外が発生したのでキャンセルしました");
-								input()
-							}
 						}
-					})
+					});
 				}
-			}
 		}
-	)}
+	}
+)}
