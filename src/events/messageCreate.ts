@@ -2,38 +2,43 @@ import * as Discord from "discord.js-selfbot-v13";
 import kanjilist from '../kanji.json';
 import * as Logger from "../utils/logger";
 import { Prefix } from "../envs";
-
+import * as fs from 'fs';
+import * as path from "path";
 export default async (Client: Discord.Client, message: Discord.Message) => {
-	
-	let ignore = !message.author.bot && message.author.id !== Client.user.id
+
+	let ignore = !message.author.bot && message.author.id !== Client.user.id && message.guild.id !== "867341022937612288"
 	if (ignore) {
-		const pattern = /過疎|かそ|カソ|kaso|ｶｿ/;
-		if (pattern.test(message.content)) {
-			const rand = Math.floor(Math.random() * 100);
-			switch (true) {
-				case (rand <30):
-					var kasomsg = "最近かそったな～";
-					message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
-					break
-				case (rand < 55):
-					var kasomsg = "過疎ってるね～笑";
-					message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
-					break
-				case (rand < 70):
-					var kasomsg = "過疎ってねぇよ:face_with_symbols_over_mouth:";
-					message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
-					break
-				case (rand < 90):
-					var kasomsg = "過疎ってないと思いたい:sob:";
-					message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
-					break
+		if (!JSON.parse(fs.readFileSync(path.join(__dirname,'../blacklist.json'), 'utf8')).hasOwnProperty(message.author.id)) {
+			const pattern = /過疎|かそ|カソ|kaso|ｶｿ/;
+			if (pattern.test(message.content)) {
+				const rand = Math.floor(Math.random() * 100);
+				switch (true) {
+					case (rand <30):
+						var kasomsg = "最近かそったな～";
+						message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
+						break
+					case (rand < 55):
+						var kasomsg = "過疎ってるね～笑";
+						message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
+						break
+					case (rand < 70):
+						var kasomsg = "過疎ってねぇよ:face_with_symbols_over_mouth:";
+						message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
+						break
+					case (rand < 90):
+						var kasomsg = "過疎ってないと思いたい:sob:";
+						message.reply(`${kanjilist[Math.floor(Math.random()*kanjilist.length)]}${kasomsg}${kanjilist[Math.floor(Math.random()*kanjilist.length)]}`);
+						break
+				}
 			}
-		}
+		} else
+			return;
 	}
 	const argss: any[] = message.content.slice(Prefix.length).trim().split(" ");
 	const args:any [] = argss || undefined
 	const cmd: any = argss.shift().toLowerCase();
 
+	const blacklistaliases = /^(blacklist|bl|fucklist|fl)$/i;
 	const playaliases = /^(play|p|join|再生|流す)$/i;
 	const leavealiases = /^(stop|st|leave|dissconnect|di|ストップ|退出|さようなら)$/i;
 	const pausealiases = /^(pause|pa|一時停止|一時)$/i;
@@ -49,6 +54,10 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 
 	if (message.content.startsWith(Prefix)) {
 		switch (true) {
+			case (blacklistaliases.test(cmd)):
+				require(`../commands/blacklist`).run(Client, message, args);
+				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+				break
 			case (playaliases.test(cmd)):
 				require(`../commands/play`).run(Client, message, args);
 				Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
