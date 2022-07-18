@@ -12,7 +12,7 @@ export async function bind(Client: Discord.Client): Promise<void> {
 				reject(error);
 			}
 
-			files = files.filter((file: string): boolean => file.endsWith(".js"));
+			files = files.filter((file: string): boolean => file.endsWith(".ts"));
 			for (const file of files) {
 				const eventName: string = file.substring(0, file.length - 3);
 				try {

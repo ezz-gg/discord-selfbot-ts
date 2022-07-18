@@ -11,26 +11,25 @@ import { player } from '../bot'
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message, args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
-        switch (true) {
-            case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
-                if (args[0] === null) {
-                    return;
-                } else if (args[0] !== null) {
-                    player(message, "volume", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, args[0], 0);
-                }
-                break;
-            case (!message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
-                message.reply(
-                    `エラー\n\`\`\` BOTはボイスチャンネルに接続していません\`\`\``
-                )
-                Logger.log(
-                    `エラー：\n			BOTはボイスチャンネルに接続していません`
-                )
-                break;
-        }
+    switch (true) {
+        case (message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
+            if (args[0] === null) {
+                return;
+            } else if (args[0] !== null) {
+                player(message, "volume", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, args[0], 0);
+            }
+            break;
+        case (!message.guild.channels.cache.some(channel => (channel.type === 'GUILD_VOICE' && channel.members.has(Client.user.id)))):
+            message.reply(
+                `エラー\n\`\`\` BOTはボイスチャンネルに接続していません\`\`\``
+            )
+            Logger.log(
+                `エラー：\n			BOTはボイスチャンネルに接続していません`
+            )
+            break;
     }
 }
+
 const info = {
     name: "volume",
     description: "Set Music Volume",

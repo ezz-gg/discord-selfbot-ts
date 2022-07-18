@@ -46,7 +46,8 @@ export const ClientManager = new Manager({
 	nodes: [
 	  {
 		host: LavalinkHost || "0.0.0.0",
-		port: 2222,
+		port: 443,
+		secure: true,
 		password: LavalinkPassword || "password",
 	  },
 	],
@@ -70,7 +71,21 @@ export async function player(message: Discord.Message, type: string | number, ti
 		textChannel: tcid,
 	});
 	let blacklist = JSON.parse(fs.readFileSync(path.join(__dirname,'./blacklist.json'), 'utf8'))
+	let whitelist = JSON.parse(fs.readFileSync(path.join(__dirname,'./whitelist.json'), 'utf8'))
 	switch (true) {
+		case (type === "whitelist_list"):
+			await message.reply(`オーナーリスト\n\`\`\`${JSON.stringify(whitelist)}\`\`\``)
+			break;
+		case (type === 'whitelist_add'):
+			whitelist[value] = title;
+			message.reply(`オーナーリストに追加\n\`\`\`ユーザー：${value}\n概要：${title}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./whitelist.json'), JSON.stringify(whitelist));
+			break;
+		case (type === "whitelist_delete"):
+			delete whitelist[value];
+			message.reply(`オーナーリストから削除\n\`\`\`ユーザー：${value}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./whitelist.json'), JSON.stringify(whitelist));
+			break;
 		case (type === "blacklist_list"):
 			await message.reply(`ブラックリスト\n\`\`\`${JSON.stringify(blacklist)}\`\`\``)
 			break;
@@ -276,4 +291,4 @@ async function input() {
 				}
 		}
 	}
-)}
+	)}

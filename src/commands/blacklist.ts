@@ -16,23 +16,21 @@ export async function run(Client: Discord.Client, message: Discord.Message, args
     const pattern2 = /delete|remove|削除|反省/i;
     const pattern3 = /list|リスト|一覧/i;
     let reason = args[2] || "理由なし"
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
-        switch (true) {
-            case (pattern1.test(args[0])):
-                player(message, "blacklist_add", reason, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[1])
-                break
-            case (pattern2.test(args[0])):
-                player(message, "blacklist_delete", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[1])
-                break
-            case (pattern3.test(args[0])):
-                player(message, "blacklist_list", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 0)
-                break
-            default:
-                return;
-        }
-    } else
-        return;
+    switch (true) {
+        case (pattern1.test(args[0])):
+            player(message, "blacklist_add", reason, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[1])
+            break
+        case (pattern2.test(args[0])):
+            player(message, "blacklist_delete", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, args[1])
+            break
+        case (pattern3.test(args[0])):
+            player(message, "blacklist_list", null, message.channel.id, message.guild.me.voice.id, message.author, message.guild.id, null, 0)
+            break
+        default:
+            return;
+    }
 }
+
 const info = {
     name: "blacklist",
     description: "Blacklist manage commands",

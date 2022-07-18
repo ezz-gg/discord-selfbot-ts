@@ -11,69 +11,68 @@ import * as Logger from "../utils/logger";
  */
 let kaisu = 0;
 export async function run(Client: Discord.Client, message: Discord.Message,  args: any[]) {
-    if ( message.author.id === Ownerid || message.author.id === Client.user.id ) {
-        const pattern2 = /\d{18}/;
-        kaisu += 1;
-        if (kaisu === 2 || 2 < kaisu) {
-          while (kaisu !== 0) {
-            kaisu -= 1;
-          }
-          console.log("slashpamを停止しました");
-        } else
-            console.log("slashpamを開始しました");
-            if (pattern2.test(args[0])) {
-                if (message.attachments.size === 0) {
-                    switch (true) {
-                        case (args[8] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-                            }
-                            break
-                        case (args[7] != null):
-                            while (kaisu === 1) {    
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
-                            }
-                            break
-                        case (args[6] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-                            }
-                            break
-                        case (args[5] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5]);
-                            }
-                            break
-                        case (args[4] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4]);
-                            }
-                            break
-                        case (args[3] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2], args[3]);
-                            }
-                            break
-                        case (args[2] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1], args[2]);
-                            }
-                            break
-                        case (args[0] != null):
-                            while (kaisu === 1) {
-                                await message.channel.sendSlash(args[0], args[1]);
-                            }
-                            break
-                    }
-                } else if (message.attachments.size !== 0) {
-                    message.reply(
-                        `エラー\n\`\`\` 添付ファイルは不可能です \`\`\``
-                    );
-                    console.log(`エラー\n 添付ファイルは不可能です`);
+    const pattern2 = /\d{18}/;
+    kaisu += 1;
+    if (kaisu === 2 || 2 < kaisu) {
+        while (kaisu !== 0) {
+        kaisu -= 1;
+        }
+        console.log("slashpamを停止しました");
+    } else
+        console.log("slashpamを開始しました");
+        if (pattern2.test(args[0])) {
+            if (message.attachments.size === 0) {
+                switch (true) {
+                    case (args[8] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+                        }
+                        break
+                    case (args[7] != null):
+                        while (kaisu === 1) {    
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
+                        }
+                        break
+                    case (args[6] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+                        }
+                        break
+                    case (args[5] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4], args[5]);
+                        }
+                        break
+                    case (args[4] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3], args[4]);
+                        }
+                        break
+                    case (args[3] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2], args[3]);
+                        }
+                        break
+                    case (args[2] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1], args[2]);
+                        }
+                        break
+                    case (args[0] != null):
+                        while (kaisu === 1) {
+                            await message.channel.sendSlash(args[0], args[1]);
+                        }
+                        break
                 }
+            } else if (message.attachments.size !== 0) {
+                message.reply(
+                    `エラー\n\`\`\` 添付ファイルは不可能です \`\`\``
+                );
+                console.log(`エラー\n 添付ファイルは不可能です`);
             }
-    }
+        }
 }
+
 const info = {
     name: "slashpam",
     description: "Spam slashcommand",
