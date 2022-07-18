@@ -54,7 +54,7 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 	const kaspamezaliases = /^(kaspamez|ksez|カソパムez|カスパムez)$/i;
 
 	if (message.content.startsWith(Prefix)) {
-		if (JSON.parse(fs.readFileSync(path.join(__dirname,'../blacklist.json'), 'utf8')).hasOwnProperty(message.author.id) || message.author.id === Ownerid) {
+		if (JSON.parse(fs.readFileSync(path.join(__dirname,'../whitelist.json'), 'utf8')).hasOwnProperty(message.author.id) || message.author.id === Ownerid) {
 			switch (true) {
 				case (whitelistaliases.test(cmd)):
 					require(`../commands/whitelist`).run(Client, message, args);
