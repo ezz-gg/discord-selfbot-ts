@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as path from "path";
 export default async (Client: Discord.Client, message: Discord.Message) => {
 	
-	let ignore = !message.author.bot && message.author.id !== Client.user.id && message.guild.id !== "867341022937612288"
+	let ignore = !message.author.bot && message.author.id !== Client.user.id
 	if (ignore) {
 		if (!JSON.parse(fs.readFileSync(path.join(__dirname,'../blacklist.json'), 'utf8')).hasOwnProperty(message.author.id)) {
 			const pattern = /過疎|かそ|カソ|kaso|ｶｿ/;
