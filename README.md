@@ -27,16 +27,12 @@ npm install
 
 ## 2
 
-npm i -g typescript
+npm i -g ts-node
  
 or
  
-yarn global add typescript
+yarn global add ts-node
  
 ## 3
 
-tsc
-
-## 4
-
-node build/bot.js
+ts-node src/bot.ts
