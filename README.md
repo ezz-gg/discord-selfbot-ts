@@ -19,7 +19,7 @@ NodeJSで作りました
 
 ## 1
 
-yarn install
+yarn
 
 or
 
