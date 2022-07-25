@@ -8,7 +8,7 @@ RUN apt install build-essential libssl-dev libffi-dev python3-dev python3-pip gi
 WORKDIR /selfbot-ts
 COPY . .
 
-RUN npm i ts-node -g
+RUN npm i typescript ts-node -g
 RUN npm install
 
 CMD [ "ts-node", "src/bot.ts" ]
