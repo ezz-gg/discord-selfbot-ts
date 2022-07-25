@@ -66,7 +66,7 @@ export async function player(message: Discord.Message, type: string | number, ti
 		voiceChannel: vcid,
 		textChannel: tcid,
 	});
-	let blacklist = await JSON.parse(await fse.readFile(path.join(__dirname,'./blacklist.json'), 'utf8'));
+	let whitelist = JSON.parse(fs.readFileSync(path.join(__dirname,'./whitelist.json'), 'utf8'))
 	switch (true) {
 		case (type === "yomiage"):
 			if (text_channel === message.channel.id) {
@@ -81,24 +81,18 @@ export async function player(message: Discord.Message, type: string | number, ti
 				};
 			};
 			break;
-		case (type === "blacklist_list"):
-			message_dayo = await message.reply(`ブラックリスト\n\`\`\`${JSON.stringify(blacklist)}\`\`\``);
-			await setTimeout(5000);
-			await message_dayo.delete();
+		case (type === "whitelist_list"):
+			await message.reply(`オーナーリスト\n\`\`\`${JSON.stringify(whitelist)}\`\`\``)
 			break;
-		case (type === 'blacklist_add'):
-			blacklist[value] = title;
-			message_dayo = await message.reply(`ブラックリストに追加\n\`\`\`ユーザー：${value}\n理由：${title}\`\`\``);
-			fse.writeFile(path.join(__dirname,'./blacklist.json'), JSON.stringify(blacklist));
-			await setTimeout(5000);
-			await message_dayo.delete();
+		case (type === 'whitelist_add'):
+			whitelist[value] = title;
+			message.reply(`オーナーリストに追加\n\`\`\`ユーザー：${value}\n概要：${title}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./whitelist.json'), JSON.stringify(whitelist));
 			break;
-		case (type === "blacklist_delete"):
-			delete blacklist[value];
-			message_dayo = await message.reply(`ブラックリストから削除\n\`\`\`ユーザー：${value}\`\`\``);
-			fse.writeFileSync(path.join(__dirname,'./blacklist.json'), JSON.stringify(blacklist));
-			await setTimeout(5000);
-			await message_dayo.delete();
+		case (type === "whitelist_delete"):
+			delete whitelist[value];
+			message.reply(`オーナーリストから削除\n\`\`\`ユーザー：${value}\`\`\``)
+			fs.writeFileSync(path.join(__dirname,'./whitelist.json'), JSON.stringify(whitelist));
 			break;
 		case (type === "join"):
 			text_channel = tcid;
