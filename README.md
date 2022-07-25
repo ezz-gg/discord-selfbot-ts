@@ -15,7 +15,7 @@ discord.js-selfbot-v13を使ったTOS違反SELFBOT
 
 NodeJSで作りました
 
-#セットアップ
+# セットアップ
 
 ## 1
 
