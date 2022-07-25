@@ -35,4 +35,17 @@ yarn global add ts-node
  
 ## 3
 
+https://github.com/Cog-Creators/Lavalink-Jars/releases
+から最後にアップデートされたファイルをダウンロードして同じフォルダーに置く
+
+## 4
+
+https://github.com/freyacodes/Lavalink/blob/master/LavalinkServer/application.yml.example
+からダウンロードしてパスワードとかいろいろ設定してポートはそのまま
+編集し終わったら、ファイル名を application.yml にして同じフォルダーに置く
+
+## 5
+
 ts-node src/bot.ts
+
+終わり
