@@ -17,7 +17,7 @@ NodeJSで作りました
 
 [読み上げｾﾙﾎﾞ](https://github.com/ezz-gg/discord-selfbot-ts/tree/tts)もあります
 
-#セットアップ
+# セットアップ
 
 ## 1
 
