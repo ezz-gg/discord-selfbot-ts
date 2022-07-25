@@ -25,8 +25,8 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 			let ratelimited = rateLimiter.take(message.author.id);
 			if (!ratelimited) {
 				switch (true) {
-					case (blacklistaliases.test(cmd)):
-						require(`../commands/blacklist`).run(Client, message, args);
+					case (whitelistaliases.test(cmd)):
+						require(`../commands/whitelist`).run(Client, message, args);
 						Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
 						break
 					case (joinaliases.test(cmd)):
