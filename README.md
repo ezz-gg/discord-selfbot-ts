@@ -1,4 +1,4 @@
-# selfbot-ts
+# selfbot-ts (読み上げｾﾙﾎﾞVer)
 discord.js-selfbot-v13を使ったTOS違反SELFBOT
 
 # 何これ
@@ -11,7 +11,7 @@ discord.js-selfbot-v13を使ったTOS違反SELFBOT
 
 コード読んで理解してください()
 
-[コマンドフォルダー](https://github.com/ezz-gg/discord-selfbot-ts/tree/main/src/commands)がコマンドすべてです
+[コマンドフォルダー](https://github.com/ezz-gg/discord-selfbot-ts/tree/tts/src/commands)がコマンドすべてです
 
 NodeJSで作りました
 
