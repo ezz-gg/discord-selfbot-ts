@@ -48,7 +48,7 @@ export const ClientManager = new Manager({
 	nodes: [
 	  {
 		host: LavalinkHost || "0.0.0.0",
-		port: 30515,
+		port: 2333,
 		password: LavalinkPassword || "ppassword",
 	  },
 	],
