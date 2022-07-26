@@ -50,6 +50,7 @@ https://github.com/freyacodes/Lavalink/blob/master/LavalinkServer/application.ym
 ## 5
 
 java -jar Lavalink.jar
+
 ts-node src/bot.ts
 
 終わり
