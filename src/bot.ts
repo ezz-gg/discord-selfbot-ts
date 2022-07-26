@@ -10,6 +10,7 @@ import * as fse from 'fs-extra';
 import * as path from "path";
 import { setTimeout } from 'timers/promises';
 var text_channel: any = 0
+export var voice_channel: any = 0
 var message_dayo: any = undefined
 
 const app = express()
