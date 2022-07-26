@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as path from "path";
 
 export default async (Client: Discord.Client, oldState, newState) => {
-    if (oldState.guild.id === Only_guild && oldState.user.id !== Client.user.id && newState.user.id !== Client.user.id && !JSON.parse(fs.readFileSync(path.join(__dirname,'../blacklist.json'), 'utf8')).hasOwnProperty(oldState.user.id || newState.user.id)) {
+    if (oldState.guild.id === Only_guild && oldState.user.id !== Client.user.id && newState.user.id !== Client.user.id) {
         if (oldState.channelId === voice_channel || newState.channelId === voice_channel) {
             if (oldState.channelId == null && newState.channelId != null) {
                 player(null, "vcmember_join", oldState.member.user.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
