@@ -9,13 +9,16 @@ export default async (Client: Discord.Client, oldState, newState) => {
         if (oldState.channelId === voice_channel || newState.channelId === voice_channel) {
             switch (true) {
                 case (oldState.channelId == null && newState.channelId != null):
-                    player(null, "vcmember_join", oldState.member.user.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
+                    player(null, "vcmember_join", newState.member.user.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
                     break;
                 case (oldState.channelId != null && newState.channelId == null):
-                    player(null, "vcmember_leave", newState.member.user.username, null, newState.channelId, newState.author, newState.guild.id, 0, 0);
+                    player(null, "vcmember_leave", oldState.member.user.username, null, newState.channelId, newState.author, newState.guild.id, 0, 0);
                     break;
-                case (oldState.channelId != null && newState.channelId != null && newState.channelId != voice_channel):
-                    player(null, "vcmember_tomove", oldState.member.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
+                case (oldState.channelId != null && newState.channelId != null && newState.channelId === voice_channel && oldState.channelId !== voice_channel):
+                    player(null, "vcmember_fromove", newState.member.user.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
+                    break;
+                case (oldState.channelId != null && newState.channelId != null && newState.channelId !== voice_channel && oldState.channelId === voice_channel):
+                    player(null, "vcmember_tomove", oldState.member.user.username, null, oldState.channelId, oldState.author, oldState.guild.id, 0, 0);
                     break;
             };
         };
