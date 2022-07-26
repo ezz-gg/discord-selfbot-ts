@@ -141,6 +141,50 @@ export async function player(message: Discord.Message, type: string | number, ti
 		case (type === "leave_broken"):
 			player.destroy();
 			break;
+			case (type === "vcmember_join"):
+			var res = await ClientManager.search(
+				`https://gttsus.vercel.app/?text=${title}、が入室しました`,
+				author
+			);
+			player.setVolume(25);
+			player.queue.add(res.tracks[0]);
+			if (!player.playing && !player.paused && !player.queue.size) {
+				await player.play();
+			};
+			break;
+		case (type === "vcmember_leave"):
+			var res = await ClientManager.search(
+				`https://gttsus.vercel.app/?text=${title}、が退出しました`,
+				author
+			);
+			player.setVolume(25);
+			player.queue.add(res.tracks[0]);
+			if (!player.playing && !player.paused && !player.queue.size) {
+				await player.play();
+			};
+			break;
+		case (type === "vcmember_fromove"):
+			var res = await ClientManager.search(
+				`https://gttsus.vercel.app/?text=${title}、が移動してきました`,
+				author
+			);
+			player.setVolume(25);
+			player.queue.add(res.tracks[0]);
+			if (!player.playing && !player.paused && !player.queue.size) {
+				await player.play();
+			};
+			break;
+		case (type === "vcmember_tomove"):
+			var res = await ClientManager.search(
+				`https://gttsus.vercel.app/?text=${title}、が移動しました`,
+				author
+			);
+			player.setVolume(25);
+			player.queue.add(res.tracks[0]);
+			if (!player.playing && !player.paused && !player.queue.size) {
+				await player.play();
+			};
+			break;
 	}
 }
 
