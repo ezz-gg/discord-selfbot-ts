@@ -12,9 +12,9 @@ import * as Logger from "../utils/logger";
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message, cmd) {
-    const messages = await message.channel.messages.fetch({ limit: 250 })
-    const filtered = messages.filter(message => message.author.id === Client.user.id)
-    await message.channel.bulkDelete(filtered)
+    const messages: TextChannel = await message.channel.messages.fetch({ limit: 250 }) as TextChannel;
+    const filtered = messages.filter(message => message.author.id === Client.user.id);
+    await message.channel.bulkDelete(filtered);
 }
 
 const info = {
