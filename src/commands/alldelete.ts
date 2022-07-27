@@ -13,7 +13,7 @@ import * as Logger from "../utils/logger";
 
 export async function run(Client: Discord.Client, message: Discord.Message, cmd) {
     const messages = await message.channel.messages.fetch({ limit: 100 });
-    const filtered = messages.filter(message => Client.user);
+    const filtered = messages.filter(message => Client.user.id);
     if (filtered) {
         if (message.channel.type === "GUILD_TEXT") {
             await message.channel.bulkDelete(filtered);
