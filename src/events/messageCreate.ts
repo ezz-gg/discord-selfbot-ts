@@ -52,8 +52,7 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 	const cmdpamaliases = /^(cmdpam|cs|コマンドスパム|コス)$/i;
 	const kaspamaliases = /^(kaspam|ks|カソパム|カスパム)$/i;
 	const kaspamezaliases = /^(kaspamez|ksez|カソパムez|カスパムez)$/i;
-	const alldeletealiases = /^(alldelete|すべて削除)$/i;
-	
+
 	if (message.content.startsWith(Prefix)) {
 		if (JSON.parse(fs.readFileSync(path.join(__dirname,'../whitelist.json'), 'utf8')).hasOwnProperty(message.author.id) || message.author.id === Ownerid) {
 			switch (true) {
@@ -111,10 +110,6 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 					break;
 				case (kaspamezaliases.test(cmd)):
 					require(`../commands/kaspamez`).run(Client, message, args);
-					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break;
-				case (alldeletealiases.test(cmd)):
-					require(`../commands/alldelete`).run (Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
 					break;
 				default:
