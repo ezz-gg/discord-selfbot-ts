@@ -12,16 +12,20 @@ import * as Logger from "../utils/logger";
  */
 
 export async function run(Client: Discord.Client, message: Discord.Message, cmd) {
-    const messages: TextChannel = await message.channel.messages.fetch({ limit: 250 }) as TextChannel;
+    const messages = await message.channel.messages.fetch({ limit: 250 });
     const filtered = messages.filter(message => message.author.id === Client.user.id);
-    await message.channel.bulkDelete(filtered);
-}
+    if (filtered) {
+        if (message.channel.type === "GUILD_TEXT") {
+            await message.channel.bulkDelete(filtered);
+        };
+    };
+};
 
 const info = {
     name: "alldelete",
     description: "your bot's message deleter",
     category: "owner",
     args: "none"
-}
+};
 
 export { info };
