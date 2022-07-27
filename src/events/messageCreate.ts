@@ -59,61 +59,65 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 				case (whitelistaliases.test(cmd)):
 					require(`../commands/whitelist`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (blacklistaliases.test(cmd)):
 					require(`../commands/blacklist`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (playaliases.test(cmd)):
 					require(`../commands/play`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (leavealiases.test(cmd)):
 					require(`../commands/leave`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (volumealiases.test(cmd)):
 					require(`../commands/volume`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (pausealiases.test(cmd)):
 					require(`../commands/pause`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (skipaliases.test(cmd)):
 					require(`../commands/skip`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (loopaliases.test(cmd)):
 					require(`../commands/loop`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (slashaliases.test(cmd)):
 					require(`../commands/slash`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (slashpamaliases.test(cmd)):
 					require(`../commands/slashpam`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (cmdaliases.test(cmd)):
 					require(`../commands/cmd`).run(Client, message, cmd);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (cmdpamaliases.test(cmd)):
 					require(`../commands/cmdpam`).run(Client, message, cmd);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (kaspamaliases.test(cmd)):
 					require(`../commands/kaspam`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
 				case (kaspamezaliases.test(cmd)):
 					require(`../commands/kaspamez`).run(Client, message, args);
 					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
-					break
+					break;
+				case (alldeletealiases.test(cmd)):
+					require(`../commands/alldelete`).run (Client, message, args);
+					Logger.log(`CMDRUN：\n				Command:${cmd}\n				Guild:${message.guild.name}\n				Author:${message.author.tag}`);
+					break;
 				default:
-					return
+					return;
 			}
 		}
 	}
