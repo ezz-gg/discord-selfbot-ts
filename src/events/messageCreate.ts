@@ -52,7 +52,8 @@ export default async (Client: Discord.Client, message: Discord.Message) => {
 	const cmdpamaliases = /^(cmdpam|cs|コマンドスパム|コス)$/i;
 	const kaspamaliases = /^(kaspam|ks|カソパム|カスパム)$/i;
 	const kaspamezaliases = /^(kaspamez|ksez|カソパムez|カスパムez)$/i;
-
+	const alldeletealiases = /^(alldelete|すべて削除)$/i;
+	
 	if (message.content.startsWith(Prefix)) {
 		if (JSON.parse(fs.readFileSync(path.join(__dirname,'../whitelist.json'), 'utf8')).hasOwnProperty(message.author.id) || message.author.id === Ownerid) {
 			switch (true) {
