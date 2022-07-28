@@ -1,6 +1,9 @@
 # selfbot-ts
 discord.js-selfbot-v13を使ったTOS違反SELFBOT
 
+
+## [つっくんはヤバイ](https://github.com/ezz-gg/discord-selfbot-ts/tree/main/tukkun.txt)
+
 # 何これ
 
 ### このコードをもっと良くできる方はpull reauestなりissusesお願いします
